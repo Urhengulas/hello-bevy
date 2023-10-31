@@ -1,10 +1,11 @@
 //! Shows how to render simple primitive shapes with a single color.
 
 use bevy::{prelude::*, sprite::MaterialMesh2dBundle};
+use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
 fn main() {
     App::new()
-        .add_plugins(DefaultPlugins)
+        .add_plugins((DefaultPlugins, WorldInspectorPlugin::new()))
         .add_systems(Startup, setup)
         .add_systems(Update, sprite_movement)
         .run();

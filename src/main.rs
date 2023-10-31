@@ -95,9 +95,10 @@ fn sprite_movement(
         let half_height = window.resolution.height() / 2.0;
 
         // bounce at the edges
-        if *y > half_height {
+        const HALF_HEIGHT_OF_SHAPE: f32 = 50.0; // TODO: this should not be static, but read from the shape
+        if *y > (half_height - HALF_HEIGHT_OF_SHAPE) {
             *direction = Direction::Down;
-        } else if *y < -half_height {
+        } else if *y < (-half_height + HALF_HEIGHT_OF_SHAPE) {
             *direction = Direction::Up;
         }
     }

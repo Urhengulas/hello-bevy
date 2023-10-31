@@ -73,20 +73,31 @@ fn setup(
     ));
 }
 
-fn sprite_movement(time: Res<Time>, mut sprite_position: Query<(&mut Direction, &mut Transform)>) {
+fn sprite_movement(
+    time: Res<Time>,
+    mut sprite_position: Query<(&mut Direction, &mut Transform)>,
+    window: Query<&Window>,
+) {
     for (mut direction, mut transform) in &mut sprite_position {
+        const SPEED: f32 = 150.0;
         let y = &mut transform.translation.y;
 
-        let dy = 150.0 * time.delta_seconds();
+        // move the sprite
+        let dy = SPEED * time.delta_seconds();
         match *direction {
             Direction::Up => *y += dy,
             Direction::Down => *y -= dy,
         }
 
+        // get window properties
+        let window = window.single();
+        // let width = window.resolution.width();
+        let half_height = window.resolution.height() / 2.0;
+
         // bounce at the edges
-        if *y > 200.0 {
+        if *y > half_height {
             *direction = Direction::Down;
-        } else if *y < -200.0 {
+        } else if *y < -half_height {
             *direction = Direction::Up;
         }
     }
